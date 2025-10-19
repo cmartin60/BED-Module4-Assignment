@@ -1,6 +1,8 @@
 // import the express application and type definition
 import express, { Express } from "express";
 
+import errorHandler from "./api/v1/middleware/errorHandler";
+
 // initialize the express application
 const app: Express = express();
 
@@ -32,5 +34,9 @@ app.get("/api/v1/health", (req, res) => {
 
     res.json(healthData);
 });
+
+
+// needs to be used last
+app.use(errorHandler);
 
 export default app;
