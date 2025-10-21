@@ -10,25 +10,25 @@ if (!fs.existsSync(logsDirectory)) {
 }
 
 // creating a write stream for access logs i.e. any time there is a request to my api. 'a' === append file
-const accessLogStream = fs.createWriteStream(
+const accessLogStream: fs.WriteStream = fs.createWriteStream(
     path.join(logsDirectory, "access.log"),
     { flags: "a" }
 );
 
 // creating a write stream for eror logs i.e. any request that is error level status codes. 'a' === append file
-const errorLogStream = fs.createWriteStream(
+const errorLogStream: fs.WriteStream = fs.createWriteStream(
     path.join(logsDirectory, "error.log"),
     { flags: "a" }
 );
 
-const accessLogger = morgan("combined", { stream: accessLogStream });
+const accessLogger: import("express").RequestHandler = morgan("combined", { stream: accessLogStream });
 
 // only logging requests if the status code is 4XX or 5XX codes (error level codes)
-const errorLogger = morgan("combined", {
+const errorLogger: import("express").RequestHandler = morgan("combined", {
     stream: errorLogStream,
     skip: (_req: Request, res: Response) => res.statusCode < 400,
 });
 
-const consoleLogger = morgan("dev");
+const consoleLogger: import("express").RequestHandler = morgan("dev");
 
 export { accessLogger, errorLogger, consoleLogger };
