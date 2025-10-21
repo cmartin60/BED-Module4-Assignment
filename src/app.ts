@@ -1,16 +1,15 @@
 // import the express application and type definition
 import express, { Express } from "express";
 
-import errorHandler from "./api/v1/middleware/errorHandler";
+import loanRoutes from "./api/v1/routes/loanRoutes";
 import userRoutes from "./api/v1/routes/userRoutes";
 import adminRoutes from "./api/v1/routes/adminRoutes";
-import loanRoutes from "./api/v1/routes/loanRoutes";
+import errorHandler from "./api/v1/middleware/errorHandler";
 import {
     accessLogger,
     errorLogger,
     consoleLogger,
 } from "./api/v1/middleware/logger";
-
 
 // initialize the express application
 const app: Express = express();
@@ -23,12 +22,16 @@ interface HealthCheckResponse {
     timestamp: string;
     version: string;
 }
-
 // Middleware START
 
 app.use(accessLogger);
 app.use(errorLogger);
 app.use(consoleLogger);
+
+// Ensures incoming body is correctly parsed to JSON, otherwise req.body would be undefined
+app.use(express.json());
+
+// Middleware END
 
 // respond to GET request at endpoint "/" with message
 app.get("/", (req, res) => {
@@ -51,9 +54,12 @@ app.get("/api/v1/health", (req, res) => {
 });
 
 // Route Imports START
+// "/api/v1/loans" will prefix all loan routes
+app.use("/api/v1/loans", loanRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/loans", loanRoutes);
+
+// Route Imports END
 
 // needs to be used last
 app.use(errorHandler);
