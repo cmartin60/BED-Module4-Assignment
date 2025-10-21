@@ -35,7 +35,7 @@ router.delete(
 router.put(
     "/:id/review",
     authenticate,
-    isAuthorized({ hasRole: ["officer"] } as AuthorizationOptions),
+    isAuthorized({ hasRole: ["officer"], allowSameUser: true } as AuthorizationOptions),
     loanController.reviewLoan
 );
 

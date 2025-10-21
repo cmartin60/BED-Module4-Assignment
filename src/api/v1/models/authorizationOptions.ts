@@ -4,6 +4,6 @@
  * @example { hasRole: ["admin", "manager"], allowSameUser: true } as AuthorizationOptions
  */
 export interface AuthorizationOptions {
-    hasRole: Array<"admin" | "manager" | "user" | "officer">;
+    hasRole: Array<"admin" | "officer" | "manager" | "user">;
     allowSameUser?: boolean;
 }
