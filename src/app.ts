@@ -5,6 +5,12 @@ import errorHandler from "./api/v1/middleware/errorHandler";
 import userRoutes from "./api/v1/routes/userRoutes";
 import adminRoutes from "./api/v1/routes/adminRoutes";
 import loanRoutes from "./api/v1/routes/loanRoutes";
+import {
+    accessLogger,
+    errorLogger,
+    consoleLogger,
+} from "./api/v1/middleware/logger";
+
 
 // initialize the express application
 const app: Express = express();
@@ -17,6 +23,12 @@ interface HealthCheckResponse {
     timestamp: string;
     version: string;
 }
+
+// Middleware START
+
+app.use(accessLogger);
+app.use(errorLogger);
+app.use(consoleLogger);
 
 // respond to GET request at endpoint "/" with message
 app.get("/", (req, res) => {
