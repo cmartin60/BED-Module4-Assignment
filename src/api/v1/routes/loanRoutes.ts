@@ -9,7 +9,7 @@ const router: Router = express.Router();
 // "/api/v1/loans" prefixes all below routes
 router.get("/", loanController.getAllLoans);
 
-// create: user is expected to be authenticated/authorized (example uses admin/manager)
+// create: user
 router.post(
     "/",
     authenticate,
@@ -17,26 +17,21 @@ router.post(
     loanController.createLoan
 );
 
-// update: admin/manager or same user allowed
+// PUT update
 router.put(
     "/:id",
     authenticate,
-    isAuthorized({
-        hasRole: ["admin", "manager"],
-        allowSameUser: true,
-    } as AuthorizationOptions),
     loanController.updateLoan
 );
 
-
+// DELETE loans
 router.delete(
     "/:id",
     authenticate,
-    isAuthorized({ hasRole: ["admin", "manager"] } as AuthorizationOptions),
     loanController.deleteLoan
 );
 
-// review: officer role
+// :id/review: officer role
 router.put(
     "/:id/review",
     authenticate,
@@ -44,7 +39,7 @@ router.put(
     loanController.reviewLoan
 );
 
-// approve: manager role
+// :id/approve: manager role
 router.put(
     "/:id/approve",
     authenticate,
@@ -52,11 +47,11 @@ router.put(
     loanController.approveLoan
 );
 
-// get by id (auth protected as example: admin or same user)
+// Get loans
 router.get(
     "/:id",
     authenticate,
-    isAuthorized({ hasRole: ["admin"], allowSameUser: true } as AuthorizationOptions),
+    isAuthorized({ hasRole: ["manager", "officer"], allowSameUser: true } as AuthorizationOptions),
     loanController.getLoanById
 );
 

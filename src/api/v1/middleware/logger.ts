@@ -17,7 +17,7 @@ const accessLogStream = fs.createWriteStream(
 
 // creating a write stream for eror logs i.e. any request that is error level status codes. 'a' === append file
 const errorLogStream = fs.createWriteStream(
-    path.join(logsDirectory, "errog.log"),
+    path.join(logsDirectory, "error.log"),
     { flags: "a" }
 );
 
