@@ -66,7 +66,7 @@ export const reviewLoan = async (
     try {
         const id: string = req.params.id;
 
-        const loan = loans.find((loan) => loan.id === id);
+        const loan: Loan | undefined = loans.find((loan) => loan.id === id);
         if (!loan) {
             return next(new AppError("Loan not found", "LOAN_NOT_FOUND", HTTP_STATUS.NOT_FOUND));
         }
@@ -109,7 +109,7 @@ export const approveLoan = async (
     try {
         const id: string = req.params.id;
 
-        const loan = loans.find((loan) => loan.id === id);
+        const loan: Loan | undefined = loans.find((loan) => loan.id === id);
         if (!loan) {
             return next(new AppError("Loan not found", "LOAN_NOT_FOUND", HTTP_STATUS.NOT_FOUND));
         }
@@ -135,7 +135,7 @@ export const getLoanById = async (
     try {
         const id: string = req.params.id;
 
-        const loan = loans.find((loan) => loan.id === id);
+        const loan: Loan | undefined = loans.find((loan) => loan.id === id);
         if (!loan) {
             return next(new AppError("Loan not found", "LOAN_NOT_FOUND", HTTP_STATUS.NOT_FOUND));
         }
@@ -160,13 +160,13 @@ export const updateLoan = async (
         const id: string = req.params.id;
         const { amount, status } = req.body;
 
-        const loan = loans.find((loan) => loan.id === id);
+        const loan: Loan | undefined = loans.find((loan) => loan.id === id);
         if (!loan) {
             return next(new AppError("Loan not found", "LOAN_NOT_FOUND", HTTP_STATUS.NOT_FOUND));
         }
 
         if (typeof amount === "number") loan.amount = amount;
-        if (typeof status === "string") loan.status = status as any;
+        if (typeof status === "string") loan.status = status as string;
 
         res.status(HTTP_STATUS.OK).json(
             successResponse(loan, "Loan updated successfully")

@@ -1,7 +1,21 @@
 /**
  * HTTP status codes used throughout the application
  */
-export const HTTP_STATUS = {
+export const HTTP_STATUS: {
+    OK: number;
+    CREATED: number;
+    NO_CONTENT: number;
+    BAD_REQUEST: number;
+    UNAUTHORIZED: number;
+    FORBIDDEN: number;
+    NOT_FOUND: number;
+    CONFLICT: number;
+    UNPROCESSABLE_ENTITY: number;
+    INTERNAL_SERVER_ERROR: number;
+    NOT_IMPLEMENTED: number;
+    BAD_GATEWAY: number;
+    SERVICE_UNAVAILABLE: number;
+} = {
     // Success responses
     OK: 200,
     CREATED: 201,

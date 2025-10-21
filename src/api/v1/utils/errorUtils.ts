@@ -19,7 +19,10 @@ export const getErrorMessage = (error: unknown): string => {
 export const getErrorCode = (error: unknown): string => {
     if (error instanceof Error) {
         // Firebase errors often have their own 'code' property
-        const firebaseError = error as any;
+        interface ErrorWithCode extends Error {
+            code?: string;
+        }
+        const firebaseError: ErrorWithCode = error as ErrorWithCode;
         return firebaseError.code || "UNKNOWN_ERROR";
     }
 

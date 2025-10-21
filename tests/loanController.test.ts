@@ -132,14 +132,14 @@ describe("Loan Controller", () => {
   describe("deleteLoan", () => {
     it("should delete a loan if found", async () => {
       // Add a loan to delete
-      const loanToDelete = {
+      const loanToDelete: loanController.Loan = {
         id: "loan_delete",
         applicantId: "user_del",
         amount: 100,
         status: "submitted",
         risk: "high",
       };
-      (loanController.loans as any[]).push(loanToDelete);
+      (loanController.loans as loanController.Loan[]).push(loanToDelete);
 
       mockReq.params = { id: "loan_delete" };
 
